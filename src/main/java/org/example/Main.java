@@ -1,17 +1,40 @@
 package org.example;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+import java.io.FileNotFoundException;
+import java.util.List;
+import javax.xml.bind.JAXBException;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class Main {
+    public Main() {
+    }
+
+    public static void main(String[] args) {
+        if (args.length == 0) {
+            System.out.println("Для запуска введите параметры");
+            System.exit(0);
+        }
+        CityFileReader reader = CityFileReaderFactory.fileReaderFromPath(args[0]);
+
+        try {
+            long startTime = System.currentTimeMillis();
+            List<Build> builds = reader.getBuilds(args[0]);
+            System.out.println("Read time = " + (System.currentTimeMillis() - startTime) + "ms.");
+            SummaryCalculator calculator = new SummaryCalculator(builds);
+            startTime = System.currentTimeMillis();
+            CitySummary summary = calculator.calculate();
+            summary.getDuplicates().forEach((key, value) -> {
+                System.out.println("\t" + value + ": " + key.getCity() + ", " + key.getStreet() + ", " + key.getHouse() + ", " + key.getFloor());
+            });
+            summary.getBuildCount().forEach((key, value) -> {
+                System.out.println(key);
+                value.forEach((floor, count) -> {
+                    System.out.println("    " + floor + "-floor: " + count + " builds");
+                });
+            });
+            System.out.println("Process time = " + (System.currentTimeMillis() - startTime) + "ms.");
+        } catch (FileNotFoundException | JAXBException var8) {
+            Exception e = var8;
+            throw new RuntimeException(e);
         }
     }
 }
