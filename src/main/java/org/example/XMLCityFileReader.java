@@ -1,12 +1,12 @@
 package org.example;
 
-import java.io.File;
-import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.File;
+import java.util.List;
 
 public class XMLCityFileReader implements CityFileReader {
     public XMLCityFileReader() {
@@ -20,7 +20,7 @@ public class XMLCityFileReader implements CityFileReader {
     private Root readXML(String path) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(Root.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
-        return (Root)unmarshaller.unmarshal(new File(path));
+        return (Root) unmarshaller.unmarshal(new File(path));
     }
 
     @XmlRootElement

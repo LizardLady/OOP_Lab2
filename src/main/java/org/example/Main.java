@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 public class Main {
@@ -16,16 +17,26 @@ public class Main {
         try {
             long startTime = System.currentTimeMillis();
             List<Build> builds = reader.getBuilds(args[0]);
-            System.out.println("Read time = " + (System.currentTimeMillis() - startTime) + "ms.");
+            long readDuration = System.currentTimeMillis() - startTime;
             SummaryCalculator calculator = new SummaryCalculator(builds);
+
             startTime = System.currentTimeMillis();
+
             CitySummary summary = calculator.calculate();
+            System.out.println("Duplicates with count:");
             summary.getDuplicates().forEach((key, value) -> System.out.println("\t" + value + ": " + key.getCity() + ", " + key.getStreet() + ", " + key.getHouse() + ", " + key.getFloor()));
+
+            System.out.println("----------------------------------");
             summary.getBuildsCountByFloorAndCity().forEach((key, value) -> {
                 System.out.println(key);
                 value.forEach((floor, count) -> System.out.println("\t" + floor + "-floor: " + count + " builds"));
             });
-            System.out.println("Process time = " + (System.currentTimeMillis() - startTime) + "ms.");
+            System.out.println("----------------------------------");
+
+            System.out.println("Read duration = " + readDuration + "ms.");
+            System.out.println("Process duration = " + (System.currentTimeMillis() - startTime) + "ms.");
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
         } catch (Exception _) {
             System.out.println("Fail to process file");
         }
