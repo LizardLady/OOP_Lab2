@@ -12,7 +12,7 @@ public class CSVCityFileReader implements CityFileReader {
 
     public List<Build> getBuilds(String path) throws FileNotFoundException {
         FileReader reader = new FileReader(path);
-        CsvToBean<Build> csvToBean = (new CsvToBeanBuilder(reader)).withType(Build.class).withSeparator(';').build();
+        CsvToBean<Build> csvToBean = (new CsvToBeanBuilder<Build>(reader)).withType(Build.class).withSeparator(';').build();
         return csvToBean.parse();
     }
 }

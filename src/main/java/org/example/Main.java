@@ -1,8 +1,6 @@
 package org.example;
 
-import java.io.FileNotFoundException;
 import java.util.List;
-import javax.xml.bind.JAXBException;
 
 public class Main {
     public Main() {
@@ -22,19 +20,14 @@ public class Main {
             SummaryCalculator calculator = new SummaryCalculator(builds);
             startTime = System.currentTimeMillis();
             CitySummary summary = calculator.calculate();
-            summary.getDuplicates().forEach((key, value) -> {
-                System.out.println("\t" + value + ": " + key.getCity() + ", " + key.getStreet() + ", " + key.getHouse() + ", " + key.getFloor());
-            });
-            summary.getBuildCount().forEach((key, value) -> {
+            summary.getDuplicates().forEach((key, value) -> System.out.println("\t" + value + ": " + key.getCity() + ", " + key.getStreet() + ", " + key.getHouse() + ", " + key.getFloor()));
+            summary.getBuildsCountByFloorAndCity().forEach((key, value) -> {
                 System.out.println(key);
-                value.forEach((floor, count) -> {
-                    System.out.println("    " + floor + "-floor: " + count + " builds");
-                });
+                value.forEach((floor, count) -> System.out.println("\t" + floor + "-floor: " + count + " builds"));
             });
             System.out.println("Process time = " + (System.currentTimeMillis() - startTime) + "ms.");
-        } catch (FileNotFoundException | JAXBException var8) {
-            Exception e = var8;
-            throw new RuntimeException(e);
+        } catch (Exception _) {
+            System.out.println("Fail to process file");
         }
     }
 }

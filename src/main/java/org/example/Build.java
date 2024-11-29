@@ -4,6 +4,7 @@ import com.opencsv.bean.CsvBindByName;
 import java.util.Objects;
 import javax.xml.bind.annotation.XmlAttribute;
 
+@SuppressWarnings("unused")
 public class Build {
     @CsvBindByName
     @XmlAttribute
@@ -49,6 +50,6 @@ public class Build {
     }
 
     public int hashCode() {
-        return Objects.hash(new Object[]{this.city, this.street, this.house, this.floor});
+        return Objects.hash(this.city, this.street, this.house, this.floor);
     }
 }

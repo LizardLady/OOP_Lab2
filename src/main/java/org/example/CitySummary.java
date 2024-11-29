@@ -4,7 +4,7 @@ import java.util.Map;
 
 public class CitySummary {
     private Map<Build, Integer> duplicates;
-    private Map<String, Map<Integer, Integer>> buildCount;
+    private Map<String, Map<Integer, Integer>> buildsCountByFloorAndCity;
 
     public CitySummary() {
     }
@@ -17,11 +17,11 @@ public class CitySummary {
         this.duplicates = duplicates;
     }
 
-    public Map<String, Map<Integer, Integer>> getBuildCount() {
-        return this.buildCount;
+    public Map<String, Map<Integer, Integer>> getBuildsCountByFloorAndCity() {
+        return this.buildsCountByFloorAndCity;
     }
 
-    public void setBuildCount(Map<String, Map<Integer, Integer>> buildCount) {
-        this.buildCount = buildCount;
+    public void setBuildsCountByFloorAndCity(Map<String, Map<Integer, Integer>> buildsCountByFloorAndCity) {
+        this.buildsCountByFloorAndCity = buildsCountByFloorAndCity;
     }
 }

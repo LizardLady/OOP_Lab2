@@ -14,12 +14,11 @@ public class XMLCityFileReader implements CityFileReader {
 
     public List<Build> getBuilds(String path) throws JAXBException {
         Root root = this.readXML(path);
-        List<Build> builds = root.getBuilds();
-        return builds;
+        return root.getBuilds();
     }
 
-    public Root readXML(String path) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(new Class[]{Root.class});
+    private Root readXML(String path) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(Root.class);
         Unmarshaller unmarshaller = context.createUnmarshaller();
         return (Root)unmarshaller.unmarshal(new File(path));
     }
@@ -38,6 +37,7 @@ public class XMLCityFileReader implements CityFileReader {
             return this.builds;
         }
 
+        @SuppressWarnings("unused")
         public void setBuilds(List<Build> builds) {
             this.builds = builds;
         }

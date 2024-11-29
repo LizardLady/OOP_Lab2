@@ -5,12 +5,12 @@ public class CityFileReaderFactory {
     }
 
     public static CityFileReader fileReaderFromPath(String path) {
-        if (path.substring(path.length() - 4).equals(".xml")) {
+        if (path.endsWith(".xml")) {
             return new XMLCityFileReader();
-        } else if (path.substring(path.length() - 4).equals(".csv")) {
+        } else if (path.endsWith(".csv")) {
             return new CSVCityFileReader();
         } else {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("File extension is not supported");
         }
     }
 }
